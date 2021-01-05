@@ -15,6 +15,7 @@ import MultiLineString from 'ol/geom/MultiLineString';
 import { OSM } from 'ol/source';
 import Collection from 'ol/Collection';
 import { StyleService } from './style.service';
+import { CoordinatesModel } from '../models/coordinates';
 
 @Injectable({
   providedIn: 'root'
@@ -27,19 +28,16 @@ export class MapService {
 
   private mapOut = new BehaviorSubject<Map>(null);
   private userPositionOut = new BehaviorSubject<any[]>(null);
-  private deviceOut = new BehaviorSubject<boolean>(null);
-  private closetsStationsListOut = new BehaviorSubject<any[]>(null);
+  private coordinatesOut = new BehaviorSubject<CoordinatesModel>(null);
+
   sendMap$ = this.mapOut.asObservable();
   sendUserPositionToInfoCard$ = this.userPositionOut.asObservable();
-  sendDevice$ = this.deviceOut.asObservable();
-  sendClosestsStationsToMap$ = this.closetsStationsListOut.asObservable();
+  coordinates$ = this.coordinatesOut.asObservable();
 
   map;
   layers = [];
   view;
   format = new WKT();
-  bikeStations: any[] = new Array;
-  streetsFeatures:any[] = new Array;
   streets;
   registrationHouseCollection = new Collection;
 
@@ -106,17 +104,28 @@ export class MapService {
       geometry: new Point(registrationCoords)
     });
 
+    let coordsObj: CoordinatesModel ={
+      'lat':parseFloat(regisTrationCoordinates[0]),
+      'lng':parseFloat(regisTrationCoordinates[1])
+    }
+
+    this.notifyCoords(coordsObj);
+
     this.styleService.applyStyleToMarker(registrationFeature);
 
     this.registrationHouseCollection.push(registrationFeature);
 
     let registrationHouseLayer = new VectorLayer({
-			name: 'bikeStations',
+			name: 'registrationPoint',
 			source: new VectorSource({
 				features: this.registrationHouseCollection
 			})
     })
     
     this.map$.addLayer(registrationHouseLayer);
+  }
+
+  notifyCoords(coords: CoordinatesModel){
+    this.coordinatesOut.next(coords);
   }
 }

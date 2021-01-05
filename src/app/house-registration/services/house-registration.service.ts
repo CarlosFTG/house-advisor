@@ -23,10 +23,12 @@ export class HouseRegistrationService {
 
     let params = new URLSearchParams();
     params.set('grant_type', 'password');
-    // params.set('username', loginUser.name);
-    // params.set('password', loginUser.password);
-    // console.log(params.toString());
+     params.set('userId', String(houseToRegister.userId));
+     //params.set('password', houseToRegister.password);
+     console.log(params.toString());
 
-    // this.httpClient.post('')
+     this.httpClient.post(urlEndpoint, params.toString(), { headers: httpHeaders }).subscribe(
+       
+     )
   }
 }
