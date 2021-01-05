@@ -86,6 +86,7 @@ export class AuthService {
     
     let payload = this.getPayLoad(accesToken);
     this._user = new User();
+    this._user.id = payload.id;
     this._user.name = payload.name;
     this._user.roles = payload.autorities;
     sessionStorage.setItem('user',JSON.stringify(this._user));

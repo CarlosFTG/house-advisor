@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HouseRegistration } from '../models/house-registration';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class HouseRegistrationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  saveHouseRegistration(){
+  saveHouseRegistration(houseToRegister: HouseRegistration){
 
     const urlEndpoint = 'http://localhost:8080/api/houseAdvisorService/saveHouseRegistration';
 

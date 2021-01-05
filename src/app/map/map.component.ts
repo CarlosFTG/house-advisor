@@ -31,7 +31,7 @@ export class MapComponent implements OnInit {
 
     this.mapService.createRegistrationFeature(lonlat);
     const dialogRef = this.dialog.open(HouseRegistrationFormComponent, {
-      width: '250px',
+      width: '500px',
       //data: {name: this.name, animal: this.animal}
     });
 

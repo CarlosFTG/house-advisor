@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
       err=>{
         //fake token until backend is fixed
         
-        let payload = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+        let payload = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJpZCI6MX0.nAdWVTMzg4nt_7mBFbz9DVkHqmwW2qwSiXb7EJZjPSk'
         
         //this.handleError(err);
         console.log('kj'+payload)
