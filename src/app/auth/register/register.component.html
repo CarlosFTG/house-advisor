@@ -1,0 +1,27 @@
+      <div>
+        <div [formGroup]="registerForm">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="surname">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput formControlName="password" type="password">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Confirme Contraseña</mat-label>
+            <input matInput formControlName="password2" type="password">
+          </mat-form-field>
+        </div>
+        <div style="width: 25%;">
+          <button mat-raised-button color="primary" (click)="registerUser()">Crear cuenta </button><br>
+        </div>
+      </div>

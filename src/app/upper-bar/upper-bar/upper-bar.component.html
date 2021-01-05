@@ -1,0 +1,19 @@
+<mat-toolbar class="upper-bar">
+    <div *ngIf='!login' class="row">
+        <button class="cell" mat-raised-button color="primary" (click)="openRegister()">Crear cuenta </button>
+        <button class="cell" mat-raised-button color="primary" (click)="openLogin()">Login </button>
+    </div>
+    <div *ngIf='login' class="row">
+        <p class="column">Hola {{userName}}</p>
+        <div class="column">
+            <div class="example-button-container">
+                <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                    <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="Example thumbs up SVG icon" (click)="addRegister()"></mat-icon>
+                </button>
+              </div> 
+        </div>
+        <div class="column">
+            <button mat-raised-button color="warn" (click)="logOut()">Log out </button>
+        </div>
+    </div>
+</mat-toolbar>

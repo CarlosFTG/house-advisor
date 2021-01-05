@@ -1,0 +1,22 @@
+<div>
+    <div [formGroup]="registrationHouseForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="description" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Tipología</mat-label>
+        <mat-select>
+          <mat-option value="noDepositBack">Casero no devuelve fianza</mat-option>
+          <mat-option value="otherPropertyProblems">Otros problemas con el casero</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div style="width: 25%;">
+      <button mat-raised-button color="primary" (click)="saveHouseRegister()">Guardar registro</button><br>
+    </div>
+  </div>
