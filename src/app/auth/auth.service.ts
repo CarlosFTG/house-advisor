@@ -37,7 +37,21 @@ export class AuthService {
   }
 
   registerUser(registerUser){
-    let  headers = new HttpHeaders({'Accept': 'application/json' ,'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+
+    const credenciales = btoa('angularapp' + ':' + '12345');
+
+    const httpHeaders = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + credenciales
+    });
+
+    let params = new URLSearchParams();
+    params.set('grant_type', 'password');
+    params.set('name', registerUser.name);
+    params.set('surname', registerUser.surname);
+    params.set('email', registerUser.email);
+    params.set('password', registerUser.password);
+    console.log(params.toString());
 
     let userpojo = {
       'name': registerUser.name,
@@ -46,24 +60,13 @@ export class AuthService {
       'password': registerUser.password
     }
     
-    this.httpClient.post('http://localhost:8080/api/houseAdvisorService/registerUser',userpojo 
-      ).subscribe(
-        res=>{
-          //@ts-ignore
-          if(res.success){
-            this.router.navigate(['registrationSuccess']);
-          }
-        },
-        err =>{
-          console.log(err)
-        }
-      )
+    return this.httpClient.post<any>('http://localhost:8080/api/userServices/register', userpojo);
   }
 
 
   doLoginUser(loginUser: User):Observable<any>{
 
-    const urlEndpoint = 'http://localhost:8080/oauth/token';
+    const urlEndpoint = 'http://localhost:8080/api/userServices/login';
 
     const credenciales = btoa('angularapp' + ':' + '12345');
 
@@ -77,25 +80,34 @@ export class AuthService {
     params.set('username', loginUser.name);
     params.set('password', loginUser.password);
     console.log(params.toString());
-    return this.httpClient.post<any>(urlEndpoint, params.toString(), { headers: httpHeaders });
+    
+
+    let userPojo = {
+      'name': loginUser.name,
+      'surname': loginUser.surname,
+      'email': loginUser.email,
+      'password': loginUser.password
+    }
+    return this.httpClient.post<any>(urlEndpoint, userPojo);
       
   }
 
   //saves user
-  saveUser(accesToken: string): void{
+  saveUser(accesToken: any): void{
     
-    let payload = this.getPayLoad(accesToken);
+    //let payload = this.getPayLoad(accesToken);
     this._user = new User();
-    this._user.id = payload.id;
-    this._user.name = payload.name;
-    this._user.roles = payload.autorities;
+    this._user.id = accesToken.id;
+    this._user.name = accesToken.name;
+    this._user.roles = accesToken.autorities;
     sessionStorage.setItem('user',JSON.stringify(this._user));
   }
 
   //saves user´s token
   saveToken(accesToken: string): void{
     this._token = accesToken;
-    sessionStorage.setItem('token',accesToken);
+    sessionStorage.setItem('JWT_TOKEN',accesToken);
+    this.notifyLogin(true);
   }
 
   getPayLoad(accesToken: string):any{

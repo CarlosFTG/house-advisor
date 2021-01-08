@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = new FormGroup({
-      'name': new FormControl(),
+      'email': new FormControl(),
       'password': new FormControl(),
     });
   }
@@ -48,19 +48,17 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    let registerParams = {
-      'email': this.loginForm.get('name').value,
-      'password': this.loginForm.get('password').value
-    }
 
-    this.user.name = this.loginForm.get('name').value;
+    this.user.email = this.loginForm.get('email').value;
     this.user.password = this.loginForm.get('password').value
 
     let response =this.authService.doLoginUser(this.user).subscribe(
       res=>{
-        console.log(res)
+
+        let neatToken = res.bearerToken.split(" ")[1].trim();
+        console.log(neatToken)
         //@ts-ignore
-        let payload = JSON.parse(response.acces_token.split(".")[1]);
+        let payload = JSON.parse(atob(neatToken.split(".")[1]));
         this.authService.saveUser(payload);
         this.authService.saveToken(payload);
         this.dialogRef.close();
@@ -69,16 +67,16 @@ export class LoginComponent implements OnInit {
       err=>{
         //fake token until backend is fixed
         
-        let payload = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJpZCI6MX0.nAdWVTMzg4nt_7mBFbz9DVkHqmwW2qwSiXb7EJZjPSk'
+        //let payload = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJpZCI6MX0.nAdWVTMzg4nt_7mBFbz9DVkHqmwW2qwSiXb7EJZjPSk'
         
         //this.handleError(err);
-        console.log('kj'+payload)
-        this.authService.saveUser(payload);
-        this.authService.saveToken(payload);
-        this.dialogRef.close();//remove when backend login fixed
+        //console.log('kj'+payload)
+        //this.authService.saveUser(payload);
+        //this.authService.saveToken(payload);
+        //this.dialogRef.close();//remove when backend login fixed
         //Swal.fire('Login erróneo', 'error');
-        Swal.fire('Login correcto', 'success');
-        this.authService.notifyLogin(true);
+        Swal.fire('Login incorrecto', 'error');
+        //this.authService.notifyLogin(true);
       }
     );
     

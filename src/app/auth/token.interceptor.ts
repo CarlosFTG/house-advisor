@@ -16,7 +16,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let token=localStorage.getItem('JWT_TOKEN');
+    let token=sessionStorage.getItem('JWT_TOKEN');
     // if (this.authService.getJwtToken()) {
        request = this.addToken(request, token);
     // }
